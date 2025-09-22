@@ -3,7 +3,7 @@ pipeline {
     environment{
         IMAGE_NAME = 'flask_api'
         CONTAINER_NAME = 'flask_api_container'
-        REGISTRY = 'ghcr.io/pithawat'
+        REGISTRY = 'ghcr.io/jirawatphankhan'
         TAG = 'latest'
     }
 
@@ -34,7 +34,7 @@ pipeline {
             steps{
                 echo 'Running unit tests'
                 sh '''
-                    python3 -m unittest discover -s . -p "test.py" -v
+                    venv/bin/python -m unittest discover -s . -p "test.py" -v
                 '''
             }
             post {
@@ -100,23 +100,6 @@ pipeline {
                 always {
                     echo 'Cleaning up containers'
                     sh 'docker rm -f $CONTAINER_NAME || true'
-                }
-            }
-        }
-
-        stage('pull image from github'){
-            agent {label 'vm-pre_prod'}
-            steps{
-                withCredentials([usernamePassword(credentialsId: 'ghcr-creds', usernameVariable: 'GH_USER', passwordVariable: 'GH_PAT')]){
-                    sh '''
-                      echo $GH_PAT | docker login ghcr.io -u $GH_USER --password-stdin
-                      docker pull $REGISTRY/$IMAGE_NAME:$TAG
-
-                      docker stop $CONTAINER_NAME || true
-                      docker rm $CONTAINER_NAME || true
-
-                      docker run -d --name $CONTAINER_NAME -p 5000:5000 $REGISTRY/$IMAGE_NAME:$TAG
-                    '''
                 }
             }
         }
