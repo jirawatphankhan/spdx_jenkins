@@ -6,6 +6,7 @@ pipeline {
         REGISTRY = 'ghcr.io/jirawatphankhan'
         TAG = 'latest'
     }
+    //asdsda
     stages{
         stage('Clean'){
             agent {label 'vm-test'}
