@@ -6,9 +6,6 @@ pipeline {
         REGISTRY = 'ghcr.io/jirawatphankhan'
         TAG = 'latest'
     }
-    triggers {
-        cron('H/3 * * * *')
-    }
     stages{
         stage('Clean'){
             agent {label 'vm-test'}
