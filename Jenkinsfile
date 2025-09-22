@@ -13,6 +13,8 @@ pipeline {
             steps{
                 echo 'cleaning workspace'
                 sh 'pwd'
+                echo 'Cleaning up containers'
+                sh 'docker rm -f $CONTAINER_NAME || true'
             }
         }
 
