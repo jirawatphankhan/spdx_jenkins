@@ -69,7 +69,7 @@ pipeline {
             steps{
                 sh '''
                     rm -rf sdpx-robot_test
-                    git clone https://github.com/pithawat/sdpx-robot_test.git
+                    git clone https://github.com/jirawatphankhan/sdpx-robot_test.git
                 '''
             }
         }
